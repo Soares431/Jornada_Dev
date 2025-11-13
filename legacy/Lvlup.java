@@ -1,3 +1,5 @@
+package legacy;
+
 public class Lvlup{
     private int lvl;
 
