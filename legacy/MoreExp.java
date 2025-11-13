@@ -1,3 +1,5 @@
+package legacy;
+
 public class MoreExp {
     private int exp, expmax;
 

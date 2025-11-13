@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Jav2.iml" filepath="$PROJECT_DIR$/Jav2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/legacy/Jav2.iml" filepath="$PROJECT_DIR$/legacy/Jav2.iml" />
     </modules>
   </component>
 </project>
