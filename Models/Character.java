@@ -10,6 +10,10 @@ public abstract class Character {
         this.occupation = occupation;
     }
 
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
     public String getName() {
         return name;
     }

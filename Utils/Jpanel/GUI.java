@@ -2,6 +2,7 @@ package Utils.Jpanel;
 
 import Models.Activity;
 import Models.Player;
+import Models.Level;
 
 import java.util.List;
 
@@ -11,6 +12,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI {
+
+    private static void checkLevelUp(Player player) {
+        if (player.getXp() >= player.getXpNeeded()) {
+            player.levelUp();
+
+            JOptionPane.showMessageDialog(null,
+                    "Você subiu para o nível " + player.getLevel() + "!",
+                    "LEVEL UP!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
     static public void menuPresentation(Player player, List<Activity> activityList) {
         JFrame frame = new JFrame("Welcome!");
@@ -86,22 +98,31 @@ public class GUI {
         mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainMenu.setSize(450, 250);
 
+
         mainMenu.setLayout(new BorderLayout());
 
         JPanel panelMain = new JPanel(new BorderLayout());
         panelMain.setBackground(Color.darkGray);
 
         JLabel titulo = new JLabel("Lobby", SwingConstants.CENTER);
-        titulo.setFont(new Font("Arial",Font.BOLD, 20));
+        titulo.setFont(new Font("Arial", Font.BOLD, 20));
         titulo.setForeground(Color.WHITE);
 
-        JLabel statuPlayer = new JLabel("<html>Ocupacao Atual: %s | XP: %.1f | NetWork: %d<br></html>", SwingConstants.CENTER);
+        String textoStatus = String.format(
+                "<html>Ocupação Atual: %s | XP: %.1f | NetWork: %d<br></html>",
+                player.getOccupation(),
+                player.getXp(),
+                player.getNetwork_quantity()
+        );
+
+        JLabel statuPlayer = new JLabel(textoStatus, SwingConstants.CENTER);
         statuPlayer.setForeground(Color.white);
-        statuPlayer.setFont(new Font( "Arial", Font.PLAIN, 18));
+        statuPlayer.setFont(new Font("Arial", Font.PLAIN, 18));
 
         StringBuilder sb = new StringBuilder("<html>");
         JLabel labelsActivitys = new JLabel();
         int i = 1;
+
         for (Activity activity : activityList) {
             sb.append(i)
                     .append(" - ")
@@ -113,13 +134,60 @@ public class GUI {
         sb.append("</html>");
         labelsActivitys.setText(sb.toString());
         labelsActivitys.setForeground(Color.WHITE);
-        labelsActivitys.setFont(new Font( "Arial", Font.PLAIN, 16));
+        labelsActivitys.setFont(new Font("Arial", Font.PLAIN, 16));
 
         panelMain.add(titulo, BorderLayout.NORTH);
-        panelMain.add(statuPlayer,  BorderLayout.CENTER);
+        panelMain.add(statuPlayer, BorderLayout.CENTER);
         panelMain.add(labelsActivitys, BorderLayout.SOUTH);
 
         mainMenu.add(panelMain, BorderLayout.CENTER);
+
+        // interação com a tecla 1
+        panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke("1"), "tecla1");
+
+        panelMain.getActionMap().put("tecla1", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Activity a = activityList.get(0);
+
+                player.setXp(player.getXp() + a.getActivity_value());
+                checkLevelUp(player);
+
+                statuPlayer.setText(String.format(
+                        "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
+                        player.getOccupation(),
+                        player.getXp(),
+                        player.getXpNeeded(),
+                        player.getLevel(),
+                        player.getNetwork_quantity()
+                ));
+            }
+        });
+
+        //interação com a tecla 2
+        panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke("2"), "tecla2");
+
+        panelMain.getActionMap().put("tecla2", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Activity a = activityList.get(1);
+
+                player.setXp(player.getXp() + a.getActivity_value());
+                checkLevelUp(player);
+
+                statuPlayer.setText(String.format(
+                        "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
+                        player.getOccupation(),
+                        player.getXp(),
+                        player.getXpNeeded(),
+                        player.getLevel(),
+                        player.getNetwork_quantity()
+                ));
+            }
+        });
+
         mainMenu.setVisible(true);
     }
 
