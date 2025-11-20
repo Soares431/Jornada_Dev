@@ -1,9 +1,6 @@
 package System;
 
-import Models.Activity;
-import Models.Level;
-import Utils.Jpanel.GUI;
-import System.Controller;
+import Utils.Menu.CLI;
 
 public class MainProgram {
 
@@ -12,6 +9,13 @@ public class MainProgram {
         Controller controller = new Controller();
 
         controller.inicialize();
+
+        while (true) {
+            CLI.Lobby_Information(controller.player);
+            CLI.Show_Activitys(controller.level_current.getActivities());
+            controller.Choose_Activity();
+
+        }
 
     }
 

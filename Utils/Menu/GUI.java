@@ -1,8 +1,7 @@
-package Utils.Jpanel;
+package Utils.Menu;
 
 import Models.Activity;
 import Models.Player;
-import Models.Level;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class GUI {
         }
     }
 
-    static public void menuPresentation(Player player, List<Activity> activityList) {
+    static public void menuPresentation(Player player) {
         JFrame frame = new JFrame("Welcome!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(650, 300);
@@ -36,7 +35,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                MainMenu(player, activityList);
+                MainMenu(player);
             }
         });
 
@@ -45,14 +44,14 @@ public class GUI {
         painelMain.setBackground(Color.DARK_GRAY);
 
         // Título
-        JLabel labelName = new JLabel("<html><h1>História do Kujikun da Silva Oliveira</h1></html>", SwingConstants.CENTER);
+        JLabel labelName = new JLabel("<html><h1>História do <Name_Player> da Silva Oliveira</h1></html>", SwingConstants.CENTER);
         labelName.setForeground(Color.WHITE);
         labelName.setFont(new Font("Arial", Font.BOLD, 20));
 
         // Texto de apresentação
         JLabel labelPresentation = new JLabel(
                 "<html>" +
-                        "<p style='text-align:center;'>Kujikun fugiu da Coreia do Norte tentando uma vida de cantor.<br>" +
+                        "<p style='text-align:center;'> <Name_Player> da Coreia do Norte tentando uma vida de cantor.<br>" +
                         "Veio para o Brasil, fez um passaporte falso e se tornou Kujikun da Silva Oliveira.<br>" +
                         "Tentou virar MC de rap, mas era péssimo cantor.<br>" +
                         "Se apaixonou por Melissa, que estudava programação.<br>" +
@@ -86,18 +85,14 @@ public class GUI {
         frame.setVisible(true);
     }
 
-    static public void Menuinformations(Player player) {
-        System.out.println("----------------------------------------------------------");
-        System.out.printf("Ocupacao Atual: %s | XP: %.1f | NetWork: %d\n", player.getOccupation(), player.getXp(), player.getNetwork_quantity());
-        System.out.println("----------------------------------------------------------");
 
-    }
 
-    private static void MainMenu(Player player, List<Activity> activityList) {
+    static private void MainMenu(Player player) {
+        List<Activity> activityList = player.getAvailableActivities();
+
         JFrame mainMenu = new JFrame("Lobby");
         mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainMenu.setSize(450, 250);
-
 
         mainMenu.setLayout(new BorderLayout());
 
@@ -108,16 +103,19 @@ public class GUI {
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
         titulo.setForeground(Color.WHITE);
 
-        String textoStatus = String.format(
-                "<html>Ocupação Atual: %s | XP: %.1f | NetWork: %d<br></html>",
-                player.getOccupation(),
-                player.getXp(),
-                player.getNetwork_quantity()
-        );
-
-        JLabel statuPlayer = new JLabel(textoStatus, SwingConstants.CENTER);
+        JLabel statuPlayer = new JLabel();
         statuPlayer.setForeground(Color.white);
         statuPlayer.setFont(new Font("Arial", Font.PLAIN, 18));
+
+        // Atualiza o texto do status
+        statuPlayer.setText(String.format(
+                "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
+                player.getOccupation(),
+                player.getXp(),
+                player.getXpNeeded(),
+                player.getLevel(),
+                player.getNetwork_quantity()
+        ));
 
         StringBuilder sb = new StringBuilder("<html>");
         JLabel labelsActivitys = new JLabel();
@@ -142,53 +140,52 @@ public class GUI {
 
         mainMenu.add(panelMain, BorderLayout.CENTER);
 
-        // interação com a tecla 1
-        panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke("1"), "tecla1");
+        for (int idx = 0; idx < activityList.size(); idx++) {
+            int indexFinal = idx;
 
-        panelMain.getActionMap().put("tecla1", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Activity a = activityList.get(0);
+            panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                    .put(KeyStroke.getKeyStroke(String.valueOf(idx + 1)), "tecla" + (idx + 1));
 
-                player.setXp(player.getXp() + a.getActivity_value());
-                checkLevelUp(player);
+            panelMain.getActionMap().put("tecla" + (idx + 1), new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Activity a = activityList.get(indexFinal);
 
-                statuPlayer.setText(String.format(
-                        "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
-                        player.getOccupation(),
-                        player.getXp(),
-                        player.getXpNeeded(),
-                        player.getLevel(),
-                        player.getNetwork_quantity()
-                ));
-            }
-        });
+                    player.setXp(player.getXp() + a.getActivity_value());
+                    checkLevelUp(player);
 
-        //interação com a tecla 2
-        panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke("2"), "tecla2");
+                    statuPlayer.setText(String.format(
+                            "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
+                            player.getOccupation(),
+                            player.getXp(),
+                            player.getXpNeeded(),
+                            player.getLevel(),
+                            player.getNetwork_quantity()
+                    ));
 
-        panelMain.getActionMap().put("tecla2", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Activity a = activityList.get(1);
-
-                player.setXp(player.getXp() + a.getActivity_value());
-                checkLevelUp(player);
-
-                statuPlayer.setText(String.format(
-                        "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
-                        player.getOccupation(),
-                        player.getXp(),
-                        player.getXpNeeded(),
-                        player.getLevel(),
-                        player.getNetwork_quantity()
-                ));
-            }
-        });
+                    // 🔥 Quando sobe de nível, o menu precisa atualizar!
+                    if (player.getXp() == 0) {
+                        mainMenu.dispose();
+                        MainMenu(player); // ← CHAMA DE NOVO PARA ATUALIZAR ATIVIDADES!
+                    }
+                }
+            });
+        }
 
         mainMenu.setVisible(true);
     }
 
+    static public void ShowMessageAlert(String mensage){
+        JFrame frame = new JFrame();
+        frame.setAlwaysOnTop(true); // garante que fique na frente
+
+        JOptionPane.showMessageDialog(
+                frame,
+                mensage,
+                "AVISO!",
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        frame.dispose();
+    }
 }
