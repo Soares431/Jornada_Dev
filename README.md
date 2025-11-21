@@ -290,6 +290,7 @@ public ArrayList<Activity> getActivities() { return activities; }
 
 ## 🔍 Screeshots
 
+## **Interface de Introduçao**
 ![Interface de Introduçao](Screenshots_da_interface_introdutoria.png)
 
 ---
