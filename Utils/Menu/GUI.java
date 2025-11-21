@@ -143,90 +143,90 @@ public class GUI {
         frame.setVisible(true);
     }
 
-    static private void Lobby(Player player) {
-        List<Activity> activityList = player.getAvailableActivities();
+    // static private void Lobby(Player player) {
+    //     List<Activity> activityList = player.getAvailableActivities();
 
-        JFrame mainMenu = new JFrame("Status de " + player.getName());
-        mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainMenu.setSize(450, 250);
+    //     JFrame mainMenu = new JFrame("Status de " + player.getName());
+    //     mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //     mainMenu.setSize(450, 250);
 
-        mainMenu.setLayout(new BorderLayout());
+    //     mainMenu.setLayout(new BorderLayout());
 
-        JPanel panelMain = new JPanel(new BorderLayout());
-        panelMain.setBackground(Color.darkGray);
+    //     JPanel panelMain = new JPanel(new BorderLayout());
+    //     panelMain.setBackground(Color.darkGray);
 
-        JLabel titulo = new JLabel("Lobby", SwingConstants.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 20));
-        titulo.setForeground(Color.WHITE);
+    //     JLabel titulo = new JLabel("Lobby", SwingConstants.CENTER);
+    //     titulo.setFont(new Font("Arial", Font.BOLD, 20));
+    //     titulo.setForeground(Color.WHITE);
 
-        JLabel statuPlayer = new JLabel();
-        statuPlayer.setForeground(Color.white);
-        statuPlayer.setFont(new Font("Arial", Font.PLAIN, 18));
+    //     JLabel statuPlayer = new JLabel();
+    //     statuPlayer.setForeground(Color.white);
+    //     statuPlayer.setFont(new Font("Arial", Font.PLAIN, 18));
 
-        // Atualiza o texto do status
-        statuPlayer.setText(String.format(
-                "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
-                player.getOccupation(),
-                player.getXp(),
-                player.getXpNeeded(),
-                player.getLevel(),
-                player.getNetwork_quantity()));
+    //     // Atualiza o texto do status
+    //     statuPlayer.setText(String.format(
+    //             "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
+    //             player.getOccupation(),
+    //             player.getXp(),
+    //             player.getXpNeeded(),
+    //             player.getLevel(),
+    //             player.getNetwork_quantity()));
 
-        StringBuilder sb = new StringBuilder("<html>");
-        JLabel labelsActivitys = new JLabel();
-        int i = 1;
+    //     StringBuilder sb = new StringBuilder("<html>");
+    //     JLabel labelsActivitys = new JLabel();
+    //     int i = 1;
 
-        for (Activity activity : activityList) {
-            sb.append(i)
-                    .append(" - ")
-                    .append(activity.toString())
-                    .append("<br>"); // quebra de linha no JLabel
-            i++;
-        }
+    //     for (Activity activity : activityList) {
+    //         sb.append(i)
+    //                 .append(" - ")
+    //                 .append(activity.toString())
+    //                 .append("<br>"); // quebra de linha no JLabel
+    //         i++;
+    //     }
 
-        sb.append("</html>");
-        labelsActivitys.setText(sb.toString());
-        labelsActivitys.setForeground(Color.WHITE);
-        labelsActivitys.setFont(new Font("Arial", Font.PLAIN, 16));
+    //     sb.append("</html>");
+    //     labelsActivitys.setText(sb.toString());
+    //     labelsActivitys.setForeground(Color.WHITE);
+    //     labelsActivitys.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        panelMain.add(titulo, BorderLayout.NORTH);
-        panelMain.add(statuPlayer, BorderLayout.CENTER);
-        panelMain.add(labelsActivitys, BorderLayout.SOUTH);
+    //     panelMain.add(titulo, BorderLayout.NORTH);
+    //     panelMain.add(statuPlayer, BorderLayout.CENTER);
+    //     panelMain.add(labelsActivitys, BorderLayout.SOUTH);
 
-        mainMenu.add(panelMain, BorderLayout.CENTER);
+    //     mainMenu.add(panelMain, BorderLayout.CENTER);
 
-        for (int idx = 0; idx < activityList.size(); idx++) {
-            int indexFinal = idx;
+    //     for (int idx = 0; idx < activityList.size(); idx++) {
+    //         int indexFinal = idx;
 
-            panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                    .put(KeyStroke.getKeyStroke(String.valueOf(idx + 1)), "tecla" + (idx + 1));
+    //         panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+    //                 .put(KeyStroke.getKeyStroke(String.valueOf(idx + 1)), "tecla" + (idx + 1));
 
-            panelMain.getActionMap().put("tecla" + (idx + 1), new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Activity a = activityList.get(indexFinal);
+    //         panelMain.getActionMap().put("tecla" + (idx + 1), new AbstractAction() {
+    //             @Override
+    //             public void actionPerformed(ActionEvent e) {
+    //                 Activity a = activityList.get(indexFinal);
 
-                    player.setXp(player.getXp() + a.getActivity_value());
+    //                 player.setXp(player.getXp() + a.getActivity_value());
 
-                    statuPlayer.setText(String.format(
-                            "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
-                            player.getOccupation(),
-                            player.getXp(),
-                            player.getXpNeeded(),
-                            player.getLevel(),
-                            player.getNetwork_quantity()));
+    //                 statuPlayer.setText(String.format(
+    //                         "<html>Ocupação Atual: %s | XP: %.1f / %.1f | Nível: %d | NetWork: %d<br></html>",
+    //                         player.getOccupation(),
+    //                         player.getXp(),
+    //                         player.getXpNeeded(),
+    //                         player.getLevel(),
+    //                         player.getNetwork_quantity()));
 
-                    // 🔥 Quando sobe de nível, o menu precisa atualizar!
-                    if (player.getXp() == 0) {
-                        mainMenu.dispose();
-                        Lobby(player); // ← CHAMA DE NOVO PARA ATUALIZAR ATIVIDADES!
-                    }
-                }
-            });
-        }
+    //                 // 🔥 Quando sobe de nível, o menu precisa atualizar!
+    //                 if (player.getXp() == 0) {
+    //                     mainMenu.dispose();
+    //                     Lobby(player); // ← CHAMA DE NOVO PARA ATUALIZAR ATIVIDADES!
+    //                 }
+    //             }
+    //         });
+    //     }
 
-        mainMenu.setVisible(true);
-    }
+    //     mainMenu.setVisible(true);
+    // }
 
     static public void ShowMessageAlert(String mensage) {
         JFrame frame = new JFrame();

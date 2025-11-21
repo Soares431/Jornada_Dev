@@ -107,7 +107,7 @@ public class Controller {
     static public boolean Probability_Showing_Letter(String name){
     
         boolean choose = false;
-        int num_rand = rand.nextInt(1) + 1; // 1 a 1000
+        int num_rand = rand.nextInt(100) + 1; // 1 a 1000
         int num_acerto = 1;
 
         if(num_rand == num_acerto){
