@@ -383,9 +383,4 @@ Fim do Jogo
 ## 👨‍💻 Autores
 
 Alunos da UNIVERSIDADE CATOLICA DE PERNAMBUCO - UNICAP: Inaldo josé do Nascimento e Lucas da Silva Soares
-
----
-
-## 📝 Licença
-
-Projeto educacional - Livre para uso e modificação.  
+ 
