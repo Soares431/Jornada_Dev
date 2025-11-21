@@ -12,75 +12,139 @@ import java.awt.event.ActionListener;
 
 public class GUI {
 
-    private static void checkLevelUp(Player player) {
+     static public void checkLevelUp(Player player) {
+         JFrame frame = new JFrame();
+         frame.setAlwaysOnTop(true);
         if (player.getXp() >= player.getXpNeeded()) {
             player.levelUp();
 
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(frame,
                     "Você subiu para o nível " + player.getLevel() + "!",
                     "LEVEL UP!",
                     JOptionPane.INFORMATION_MESSAGE);
         }
+        frame.dispose();
     }
 
-    static public void menuPresentation(Player player) {
-        JFrame frame = new JFrame("Welcome!");
+    static public String Requesting_Player_Name(){
+        JFrame frame = new JFrame();
+        frame.setAlwaysOnTop(true);
+        String nome = JOptionPane.showInputDialog(frame, "Digite seu nome:", "Bem Vindo!", JOptionPane.QUESTION_MESSAGE);
+
+        frame.dispose();
+        return nome;
+    }
+
+    static public void menuPresentation(Player player, String nome) {
+        JFrame frame = new JFrame("Jornada do Dev");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(650, 300);
+        frame.setSize(800, 600);
         frame.setLayout(new BorderLayout());
 
-        // Botão
-        JButton botaoOK = new JButton("Seguir");
+        // ========== PAINEL PRINCIPAL ==========
+        JPanel painelMain = new JPanel(new BorderLayout());
+        painelMain.setBackground(new Color(30, 30, 30));
+        painelMain.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // ========== TÍTULO ==========
+        JLabel labelName = new JLabel(
+                String.format("<html><h1 style='color: #4CAF50;'>História de %s</h1></html>", nome),
+                SwingConstants.CENTER
+        );
+        labelName.setForeground(new Color(76, 175, 80));
+        labelName.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        labelName.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+
+        // ========== CAIXA DE TEXTO COM ESTILO ==========
+        JPanel painelTextoWrapper = new JPanel(new BorderLayout());
+        painelTextoWrapper.setBackground(new Color(45, 45, 45));
+        painelTextoWrapper.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(76, 175, 80), 2, true),
+                BorderFactory.createEmptyBorder(25, 30, 25, 30)
+        ));
+
+        JLabel labelPresentation = new JLabel(
+                String.format(
+                        "<html>" +
+                                "<div style='width: 680px; line-height: 1.6; color: #E0E0E0;'>" +
+                                "<p style='margin-bottom: 15px;'><span style='color: #4CAF50; font-weight: bold; font-size: 16px;'>%s</span> " +
+                                "desceu do ônibus na rodoviária de Recife sem planos. " +
+                                "Vinha de uma viagem pelo Nordeste fazendo bicos, e Recife virou parada " +
+                                "porque o ônibus quebrou.</p>" +
+
+                                "<p style='margin-bottom: 15px;'>Arrumou um quarto num hostel barato e trabalho numa lanchonete. " +
+                                "Durante um intervalo, viu um cara programando num notebook cheio de adesivos " +
+                                "na praça. Curioso, puxou conversa. O programador trabalhava remoto, ganhava bem, " +
+                                "tinha liberdade. <span style='color: #FFC107;'>Aquilo mexeu com %s.</span></p>" +
+
+                                "<p style='margin-bottom: 15px;'>Naquela noite, ele pesquisou " +
+                                "<span style='color: #2196F3; font-style: italic;'>\"como aprender programação\"</span> no celular. " +
+                                "Caiu num mundo novo: tutoriais gratuitos, histórias de autodidatas que mudaram " +
+                                "de vida, possibilidades infinitas.</p>" +
+
+                                "<p style='margin-bottom: 15px;'>Três meses depois, <span style='color: #4CAF50;'>%s</span> acorda às 5h para estudar antes do trabalho. " +
+                                "Aprendeu Python básico, fez pequenos exercícios, e agora está pronto para " +
+                                "criar seu primeiro projeto de verdade.</p>" +
+
+                                "<p style='margin-bottom: 0;'><span style='color: #FF5722; font-weight: bold;'>Hoje</span>, " +
+                                "com um notebook emprestado e muita determinação, ele começa " +
+                                "a jornada para se tornar um programador reconhecido. " +
+                                "<span style='color: #4CAF50; font-weight: bold;'>O caminho é longo, mas ele acabou de dar o primeiro passo.</span></p>" +
+                                "</div>" +
+                                "</html>",
+                        nome, nome, nome
+                )
+        );
+        labelPresentation.setForeground(new Color(224, 224, 224));
+        labelPresentation.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        labelPresentation.setVerticalAlignment(SwingConstants.TOP);
+
+        painelTextoWrapper.add(labelPresentation, BorderLayout.CENTER);
+
+        // ========== PAINEL DE CONTEÚDO ==========
+        JPanel painelTexto = new JPanel(new BorderLayout());
+        painelTexto.setBackground(new Color(30, 30, 30));
+        painelTexto.add(labelName, BorderLayout.NORTH);
+        painelTexto.add(painelTextoWrapper, BorderLayout.CENTER);
+
+        // ========== BOTÃO ESTILIZADO ==========
+        JButton botaoOK = new JButton("Começar Jornada →");
+        botaoOK.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        botaoOK.setPreferredSize(new Dimension(200, 45));
+        botaoOK.setBackground(new Color(76, 175, 80));
+        botaoOK.setForeground(Color.WHITE);
+        botaoOK.setFocusPainted(false);
+        botaoOK.setBorderPainted(false);
+        botaoOK.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        botaoOK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botaoOK.setBackground(new Color(67, 160, 71));  // Verde mais escuro
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botaoOK.setBackground(new Color(76, 175, 80));  // Verde original
+            }
+        });
+
         botaoOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                MainMenu(player);
+//                MainMenu(player); Fora de uso
             }
         });
 
-        // Painel principal com BorderLayout
-        JPanel painelMain = new JPanel(new BorderLayout());
-        painelMain.setBackground(Color.DARK_GRAY);
-
-        // Título
-        JLabel labelName = new JLabel("<html><h1>História do <Name_Player> da Silva Oliveira</h1></html>", SwingConstants.CENTER);
-        labelName.setForeground(Color.WHITE);
-        labelName.setFont(new Font("Arial", Font.BOLD, 20));
-
-        // Texto de apresentação
-        JLabel labelPresentation = new JLabel(
-                "<html>" +
-                        "<p style='text-align:center;'> <Name_Player> da Coreia do Norte tentando uma vida de cantor.<br>" +
-                        "Veio para o Brasil, fez um passaporte falso e se tornou Kujikun da Silva Oliveira.<br>" +
-                        "Tentou virar MC de rap, mas era péssimo cantor.<br>" +
-                        "Se apaixonou por Melissa, que estudava programação.<br>" +
-                        "E assim entrou na área de TI e virou programador.<br></p>" +
-                        "</html>"
-        );
-        labelPresentation.setForeground(Color.WHITE);
-        labelPresentation.setFont(new Font("Arial", Font.PLAIN, 16));
-        labelPresentation.setHorizontalAlignment(SwingConstants.CENTER);
-
-        // Painel para centralizar texto
-        JPanel painelTexto = new JPanel(new BorderLayout());
-        painelTexto.setBackground(Color.DARK_GRAY);
-        painelTexto.add(labelName, BorderLayout.NORTH);
-        painelTexto.add(labelPresentation, BorderLayout.CENTER);
-
-        // Painel do botão centralizado na parte inferior
+        // ========== PAINEL DO BOTÃO ==========
         JPanel painelBotao = new JPanel();
-        painelBotao.setBackground(Color.DARK_GRAY);
+        painelBotao.setBackground(new Color(30, 30, 30));
+        painelBotao.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         painelBotao.add(botaoOK);
 
-        // Adiciona tudo ao painel principal
+        // ========== MONTAGEM FINAL ==========
         painelMain.add(painelTexto, BorderLayout.CENTER);
         painelMain.add(painelBotao, BorderLayout.SOUTH);
-
-        // Adiciona o painel principal ao frame
         frame.add(painelMain, BorderLayout.CENTER);
 
-        // Centraliza a janela na tela
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -188,4 +252,21 @@ public class GUI {
 
         frame.dispose();
     }
+
+    static public void LevelUpMensage(Player player){
+        JFrame frame = new JFrame();
+        frame.setAlwaysOnTop(true); // garante que fique na frente
+
+        JOptionPane.showMessageDialog(
+                frame,
+                "PARABENS! VOCÊ É AGORA: " + player.getLevelData().getName(),
+                "AVISO!",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        frame.dispose();
+    }
+
+
+
 }

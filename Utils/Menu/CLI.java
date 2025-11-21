@@ -41,7 +41,7 @@ public final class CLI {
         Support.Sleep(0);
         Support.Clear_Screen(); // Não funciona por hora
         underscore();
-        System.out.println("\nBEM VINDO A VIDA DO GAROTO DE PROGRAMA\n");
+        System.out.println("\nBEM VINDO!\n");
         underscore();
     }
 

@@ -9,20 +9,17 @@ public final class Support {
 
     // Fora de Execução
     static public void Clear_Screen() {
-//        try {
-//            String os = System.getProperty("os.name");
-//            if (os.contains("Windows")) {
-//                // Para Windows
-//                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-//                // Ou: Runtime.getRuntime().exec("cls");
-//            } else {
-//                // Para Linux e macOS
-//                Runtime.getRuntime().exec("clear");
-//            }
-//        } catch (Exception exception) {
-//            // Lide com a exceção
-//            System.err.println("Erro ao limpar a tela: " + exception.getMessage());
-//        }
+        try {
+            String sistemaOperacional = System.getProperty("os.name");
+
+            if (sistemaOperacional.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao limpar a tela");
+        }
     }
 
     static public void Sleep(long time) {

@@ -53,7 +53,7 @@ public class Player extends Character {
         updateOccupation();
     }
 
-    private void updateLevelData() {
+    public void updateLevelData() {
         switch (level) {
             case 1 -> levelData = Level.ESTUDANTE;
             case 2 -> levelData = Level.ESTAGIARIO;
@@ -90,7 +90,7 @@ public class Player extends Character {
     }
 
     public void setNetwork_quantity(int network_quantity) {
-        network_quantity = network_quantity;
+        this.network_quantity = network_quantity;
     }
 
     public int getCommunication() {
@@ -131,6 +131,26 @@ public class Player extends Character {
 
     public void setSoftware_architecture(int software_architecture) {
         this.software_architecture = software_architecture;
+    }
+
+    public void addXp(double amount) {
+        this.xp += amount;
+
+        // Verifica se subiu de nível
+        if (this.xp >= xpNeeded) {
+            levelUp();
+        }
+    }
+    public void addSkillPoints(Skill skill) {
+        switch (skill.getName().toLowerCase()) {
+            case "network" -> this.network_quantity += skill.getPont_skills();
+            case "comunicação" -> this.communication += skill.getPont_skills();
+            case "estruturas de dados e algoritmos" -> this.algorithms += skill.getPont_skills();
+            case "bancos de dados" -> this.databases += skill.getPont_skills();
+            case "pensamento lógico" -> this.logical_thinking += skill.getPont_skills();
+            case "arquitetura de software" -> this.software_architecture += skill.getPont_skills();
+            default -> System.out.println("⚠ Skill desconhecida: " + skill.getName());
+        }
     }
 
 

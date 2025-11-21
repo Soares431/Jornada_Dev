@@ -20,6 +20,7 @@ public class Activity {
         this.skill_point_gain = skill_point_gain;
     }
 
+
     public String getName() {
         return name;
     }
@@ -58,4 +59,9 @@ public class Activity {
 
         return name + text;
     }
+
+    public int getState() {
+        return state;
+    }
+
 }
