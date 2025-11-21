@@ -1,7 +1,5 @@
 package Utils.Structure;
 
-import Utils.Menu.CLI;
-
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -31,13 +29,9 @@ public final class Support {
         }
     }
 
-    static public String KeyForContinue(Scanner input) {
-
-        CLI.underscore();
+    static public void KeyForContinue(Scanner input) {
         System.out.println("Pressione Qualquer tecla para continuar: ");
-        String name = input.nextLine();
-        return name;
-
+        input.next();
     }
 
 }
