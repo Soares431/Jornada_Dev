@@ -258,7 +258,7 @@ public class GUI {
 
         AtomicBoolean go_place = new AtomicBoolean(false);
 
-        JFrame frame = new JFrame("Convie");
+        JFrame frame = new JFrame("Convite");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLayout(new BorderLayout());

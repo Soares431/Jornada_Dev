@@ -38,7 +38,7 @@ public final class CLI {
 
         System.err.println("Atividade(s) que você pode fazer: \n");
         for (int i = 0; i < activities.size(); i++) {
-            System.out.printf("%d | O que vai ganhar: %s \n", i + 1, activities.get(i).toString());
+            System.out.printf("%d | %s \n", i + 1, activities.get(i).toString());
         }
 
     }

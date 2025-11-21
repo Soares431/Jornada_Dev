@@ -57,7 +57,7 @@ public class Activity {
     public String toString() {
         String text =  (state == 1 ) ? " Buffe de XP: " + Double.toString(activity_value) + " X" : " " + Double.toString(activity_value) + "XP";
 
-        return name + text;
+        return name + " -  O que vai ganhar: " + text;
     }
 
     public int getState() {
