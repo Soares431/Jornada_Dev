@@ -291,7 +291,13 @@ public ArrayList<Activity> getActivities() { return activities; }
 ## 🔍 Screeshots
 
 ## **Interface de Introduçao**
-![Interface de Introduçao](Screenshots_da_interface_introdutoria.png)
+![Interface de Introduçao](Screenshot_da_interface_introdutoria.png)
+
+## **Convite**
+![Convite](Screenshots_do_convite.png)
+
+## **Interface de Interação**
+![Interface de Interacao](Screeshot_interface_de_Interacao.png)
 
 ---
 
